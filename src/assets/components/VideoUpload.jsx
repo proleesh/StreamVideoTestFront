@@ -165,7 +165,7 @@ export default function VideoUpload() {
                   rounded
                   withBorderAccent
                   onDismiss={() => {
-                    alert("성공했습니다.");
+                    setMessage("");
                   }}
                 >
                   <span className="font-medium">업로드 성공!</span>
