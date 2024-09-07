@@ -1,7 +1,16 @@
-import { Button, Card, Label, Textarea, TextInput } from "flowbite-react";
+import {
+  Alert,
+  Button,
+  Card,
+  Label,
+  Progress,
+  Textarea,
+  TextInput,
+} from "flowbite-react";
 import videoLogo from "../upload.png";
 import { useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 export default function VideoUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [meta, setMeta] = useState({
@@ -33,6 +42,15 @@ export default function VideoUpload() {
     saveVideoToServer(selectedFile, meta);
   }
 
+  function resetForm() {
+    setMeta({
+      title: "",
+      description: "",
+    });
+    setSelectedFile(null);
+    setUploading(false);
+  }
+
   async function saveVideoToServer(video, videoMetaData) {
     setUploading(true);
     try {
@@ -48,15 +66,25 @@ export default function VideoUpload() {
             "Content-Type": "multipart/form-data",
           },
           onUploadProgress: (progressEvent) => {
-            console.log(progressEvent);
-            setProgress(progressEvent);
+            const progress = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            console.log(progress);
+            setProgress(progress);
           },
         }
       );
       console.log(response);
+      setProgress(0);
       setMessage("File uploaded!!!");
+      setUploading(false);
+      toast.success("동영상 업로드 성공!!");
+      resetForm();
     } catch (error) {
       console.log(error);
+      setMessage("업로드에 실패했습니다.");
+      setUploading(false);
+      toast.error("동영상 업로드 실패!!");
     }
   }
   return (
@@ -74,6 +102,7 @@ export default function VideoUpload() {
                 <Label htmlFor="file-upload" value="동영상 타이틀" />
               </div>
               <TextInput
+                value={meta.title}
                 onChange={formFieldChange}
                 name="title"
                 placeholder="타이틀을 쓰세요."
@@ -84,6 +113,7 @@ export default function VideoUpload() {
                 <Label htmlFor="comment" value="동영상 설명" />
               </div>
               <Textarea
+                value={meta.description}
                 onChange={formFieldChange}
                 name="description"
                 id="comment"
@@ -116,8 +146,36 @@ export default function VideoUpload() {
                 />
               </label>
             </div>
+            <div className="justify-center">
+              {uploading && (
+                <Progress
+                  progress={progress}
+                  textLabel="업로드 중..."
+                  size="lg"
+                  color="pink"
+                  labelProgress
+                  labelText
+                />
+              )}
+            </div>
+            <div className="">
+              {message && (
+                <Alert
+                  color={"success"}
+                  rounded
+                  withBorderAccent
+                  onDismiss={() => {
+                    alert("성공했습니다.");
+                  }}
+                >
+                  <span className="font-medium">업로드 성공!</span>
+                </Alert>
+              )}
+            </div>
             <div className="flex justify-center">
-              <Button type="submit">제출</Button>
+              <Button disabled={uploading} type="submit">
+                제출
+              </Button>
             </div>
           </form>
         </div>
