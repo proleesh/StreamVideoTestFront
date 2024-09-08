@@ -19,12 +19,29 @@ function App() {
           <div>
             <h1 className="text-black">Playing Video</h1>
             <video
-              style={{
-                width: 500,
-              }}
-              src={`http://localhost:8080/api/v1/videos/stream/${videoId}`}
+              id="my-video"
+              className="video-js"
               controls
-            ></video>
+              preload="auto"
+              width="640"
+              height="264"
+              data-setup="{}"
+            >
+              <source
+                src={`http://localhost:8080/api/v1/videos/stream/range/${videoId}`}
+                type="video/mp4"
+              />
+              <p className="vjs-no-js">
+                To view this video please enable JavaScript, and consider
+                upgrading to a web browser that
+                <a
+                  href="https://videojs.com/html5-video-support/"
+                  target="_blank"
+                >
+                  supports HTML5 video
+                </a>
+              </p>
+            </video>
           </div>
           <VideoUpload />
         </div>
