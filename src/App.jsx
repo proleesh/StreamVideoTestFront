@@ -24,7 +24,6 @@ function App() {
               controls
               preload="auto"
               width="640"
-              height="264"
               data-setup="{}"
             >
               <source
