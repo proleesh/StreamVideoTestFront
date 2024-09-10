@@ -1,12 +1,13 @@
 import { Toaster } from "react-hot-toast";
 import "./App.css";
-import VideoUpload from "./assets/components/VideoUpload";
-import { useState } from "react";
+import VideoUpload from "./components/VideoUpload";
+import VideoPlayer from "./components/VideoPlayer";
+// import { useState } from "react";
 
 function App() {
-  const [videoId, setVideoId] = useState(
-    "cf890bf6-cfd5-4c90-832d-1e46592f5dad"
-  );
+  // const [videoId, setVideoId] = useState(
+  //   "3bd1c7fb-951a-460a-ae33-b431d9879831"
+  // );
   return (
     <>
       <Toaster />
@@ -18,7 +19,7 @@ function App() {
         <div className="flex mt-14 w-full justify-around">
           <div>
             <h1 className="text-black">Playing Video</h1>
-            <video
+            {/* <video
               id="my-video"
               className="video-js"
               controls
@@ -27,7 +28,8 @@ function App() {
               data-setup="{}"
             >
               <source
-                src={`http://localhost:8080/api/v1/videos/stream/range/${videoId}`}
+                // src={`http://localhost:8080/api/v1/videos/stream/range/${videoId}`}
+                src={`http://localhost:8080/api/v1/videos/3bd1c7fb-951a-460a-ae33-b431d9879831/master.m3u8`}
                 type="video/mp4"
               />
               <p className="vjs-no-js">
@@ -40,7 +42,10 @@ function App() {
                   supports HTML5 video
                 </a>
               </p>
-            </video>
+            </video> */}
+            <VideoPlayer
+              src={`http://localhost:8080/api/v1/videos/6ba38b3c-4505-4c80-b8b1-08e9a473bedb/master.m3u8`}
+            ></VideoPlayer>
           </div>
           <VideoUpload />
         </div>

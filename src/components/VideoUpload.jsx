@@ -7,7 +7,7 @@ import {
   Textarea,
   TextInput,
 } from "flowbite-react";
-import videoLogo from "../upload.png";
+import videoLogo from "../assets/upload.png";
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
