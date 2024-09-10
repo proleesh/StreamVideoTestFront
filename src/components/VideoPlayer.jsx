@@ -7,6 +7,11 @@ import toast from "react-hot-toast";
 export default function VideoPlayer({ src }) {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
+  if (!src) {
+    console.error("Video source is missing!");
+    toast.error("Video source is missing!");
+    return;
+  }
 
   useEffect(() => {
     playerRef.current = videojs(videoRef.current, {
@@ -35,14 +40,14 @@ export default function VideoPlayer({ src }) {
   }, [src]);
 
   return (
-    <>
+    <div>
       <div data-vjs-player>
         <video
           ref={videoRef}
-          style={{ width: "550%", height: "450px" }}
+          style={{ width: "100%", height: "500px" }}
           className="video-js vjs-control-bar"
         ></video>
       </div>
-    </>
+    </div>
   );
 }

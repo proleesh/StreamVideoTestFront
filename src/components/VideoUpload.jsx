@@ -76,7 +76,7 @@ export default function VideoUpload() {
       );
       console.log(response);
       setProgress(0);
-      setMessage("File uploaded!!!");
+      setMessage("File uploaded!!!" + response.data.videoId);
       setUploading(false);
       toast.success("동영상 업로드 성공!!");
       resetForm();
